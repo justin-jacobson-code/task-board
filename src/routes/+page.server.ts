@@ -1,7 +1,6 @@
 import type { ColumnData } from "../types/types";
 import { error } from '@sveltejs/kit';
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load() {
     // const post = await getPostFromDatabase(params.slug);
     let columnsData: ColumnData[] = [

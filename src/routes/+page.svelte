@@ -1,6 +1,7 @@
 <script lang="ts">
   import Board from "../components/Board.svelte";
-  export let data;
+  import type { PageData } from "./$types";
+  export let data: PageData;
 </script>
 
 <!-- Render the Board component -->

@@ -47,6 +47,7 @@
   border-radius: 5px;
   height: 5em;
   position: relative;
+  opacity: .8;
 }
 
 .delete-button {
