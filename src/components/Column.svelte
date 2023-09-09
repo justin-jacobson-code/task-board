@@ -2,6 +2,8 @@
 	import { flip } from "svelte/animate";
 	import { dndzone } from "svelte-dnd-action";
 	import type { Items } from "../types/types";
+	import CardAddition from "./CardAddition.svelte";
+    import Card from "./Card.svelte";
 	const flipDurationMs = 150;
 
 	export let name: string;
@@ -35,12 +37,10 @@
 		on:finalize={handleDndFinalizeCards}
 	>
 
-		{#each items as item (item)}
-			<div class="card" animate:flip={{ duration: flipDurationMs }}>
-				{item.name}
-			</div>
+		{#each items as item (item.id)}
+			<Card bind:item={item.name} />
 		{/each}
-
+		<CardAddition bind:items={items} />
 	</div>
 </div>
 
