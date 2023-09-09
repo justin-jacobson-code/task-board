@@ -28,6 +28,7 @@
 	<div class="column-title">
 		{name}
 	</div>
+		<CardAddition bind:items />
 	<div
 		class="column-content"
 		use:dndzone={{
@@ -39,7 +40,6 @@
 		on:consider={handleDndConsiderCards}
 		on:finalize={handleDndFinalizeCards}
 	>
-		<CardAddition bind:items />
 		{#each items as item (item.id)}
 			<Card bind:item={item} deleteItem={() => deleteItem(item)} />
 		{/each}
