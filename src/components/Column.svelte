@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { flip } from "svelte/animate";
 	import { dndzone } from "svelte-dnd-action";
 	import type { Item, Items } from "../types/types";
 	import CardAddition from "./CardAddition.svelte";

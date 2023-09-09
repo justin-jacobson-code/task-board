@@ -51,8 +51,8 @@
 
 .delete-button {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 8px;
+  right: 8px;
   cursor: pointer;
   font-weight: bold;
   background-image: none;
