@@ -9,7 +9,7 @@
 </script>
 
 <section class="board" >
-    {#each columns as {id, name, items}, idx (id)}
+    {#each columns as {_id, name, items}, idx (_id)}
   		<div class="column"animate:flip="{{duration: flipDurationMs}}" >
             <Column name={name} items={items} />
         </div>

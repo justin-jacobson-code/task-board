@@ -14,7 +14,7 @@
 
 	function deleteItem(itemToDelete: Item) {
 		// filter out itemToDelete from items
-		items = items.filter((item: Item) => item.id !== itemToDelete.id);
+		items = items.filter((item: Item) => item._id !== itemToDelete._id);
 	}
 </script>
 
@@ -34,7 +34,7 @@
 		on:consider={handleDndCard}
 		on:finalize={handleDndCard}
 	>
-		{#each items as item (item.id)}
+		{#each items as item (item._id)}
 			<Card bind:item={item} deleteItem={(item) => deleteItem(item)} />
 		{/each}
 	</div>

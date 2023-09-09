@@ -7,7 +7,7 @@
     function addCard() {
         if (newCardName.trim() !== "") {
             // Trigger an event to add the new card to the column
-            const newCard = { id: Date.now(), name: newCardName };
+            const newCard = { _id: Date.now(), name: newCardName };
             items = [newCard, ...items];
 
             // Clear the input field
