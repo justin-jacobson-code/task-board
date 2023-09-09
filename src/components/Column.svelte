@@ -3,7 +3,7 @@
 	import { dndzone } from "svelte-dnd-action";
 	import type { Item, Items } from "../types/types";
 	import CardAddition from "./CardAddition.svelte";
-    import Card from "./Card.svelte";
+	import Card from "./Card.svelte";
 	const flipDurationMs = 150;
 
 	export let name: string;
@@ -22,7 +22,6 @@
 		// filter out itemToDelete from items
 		items = items.filter((item) => item.id !== itemToDelete.id);
 	}
-
 </script>
 
 <div class="wrapper">
@@ -37,15 +36,13 @@
 			zoneTabIndex: -1,
 			dropTargetStyle: {},
 		}}
-
 		on:consider={handleDndConsiderCards}
 		on:finalize={handleDndFinalizeCards}
 	>
-
+		<CardAddition bind:items />
 		{#each items as item (item.id)}
-			<Card bind:item={item.name} deleteItem={() => deleteItem(item)} />
+			<Card bind:item={item} deleteItem={() => deleteItem(item)} />
 		{/each}
-		<CardAddition bind:items={items} />
 	</div>
 </div>
 

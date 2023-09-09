@@ -54,8 +54,27 @@
   top: 5px;
   right: 5px;
   cursor: pointer;
-  color: red;
   font-weight: bold;
+  background-image: none;
+  padding: 2px 6px;
+  color: #dc3545;
+  /* background-color: transparent; */
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+  border-radius: 4px;
+  transition: background-color 0.5s, color 0.2s, border-color 0.5s;
+  opacity: 0;
+}
+
+.delete-button:hover {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+  opacity: 1;
+}
+
+.delete-button:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
 }
 
 .wrapper {
@@ -63,4 +82,18 @@
   /* width: 100%; */
   /*Notice we make sure this container doesn't scroll so that the title stays on top and the dndzone inside is scrollable*/
   overflow-y: hidden;
+}
+
+.card-addition input[type="text"] {
+  width: 80%; /* Set the input width to 100% to match the container's width */
+  padding: 0.5em; /* Add some padding for spacing */
+  margin: auto;
+  /* margin-top: 2em; */
+  margin-bottom: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  position: relative;
+  border: 1px solid #ccc;
 }

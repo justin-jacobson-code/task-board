@@ -2,7 +2,6 @@
     import type { Item } from "../types/types";
     export let item: Item;
     export let deleteItem: (item: Item) => void;
-
 </script>
 
 <div class="card">
@@ -14,14 +13,14 @@
         aria-label="Delete"
         on:click={() => deleteItem(item)}
         on:keypress={(event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-              deleteItem(item);
+            if (event.key === "Enter" || event.key === " ") {
+                deleteItem(item);
             }
-          }}
+        }}
     >
         X
     </span>
 
     <!-- Card content -->
-    {item}
+    {item.name}
 </div>
