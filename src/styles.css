@@ -46,6 +46,16 @@
   border: 0.5px solid #333333;
   border-radius: 5px;
   height: 5em;
+  position: relative;
+}
+
+.delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
 }
 
 .wrapper {

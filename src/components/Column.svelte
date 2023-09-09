@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { flip } from "svelte/animate";
 	import { dndzone } from "svelte-dnd-action";
-	import type { Items } from "../types/types";
+	import type { Item, Items } from "../types/types";
 	import CardAddition from "./CardAddition.svelte";
     import Card from "./Card.svelte";
 	const flipDurationMs = 150;
@@ -16,6 +16,11 @@
 
 	function handleDndFinalizeCards(e: CustomEvent<{ items: any[] }>) {
 		onDrop(e.detail.items);
+	}
+
+	function deleteItem(itemToDelete: Item) {
+		// filter out itemToDelete from items
+		items = items.filter((item) => item.id !== itemToDelete.id);
 	}
 
 </script>
@@ -38,7 +43,7 @@
 	>
 
 		{#each items as item (item.id)}
-			<Card bind:item={item.name} />
+			<Card bind:item={item.name} deleteItem={() => deleteItem(item)} />
 		{/each}
 		<CardAddition bind:items={items} />
 	</div>
