@@ -1,0 +1,7 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  /* background: linear-gradient(to bottom, #ff9900, #ff6600); Adjust colors as needed */
+  font-family: Arial, sans-serif; /* Optional: Define a font family */
+}

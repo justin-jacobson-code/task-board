@@ -1,0 +1,56 @@
+.board {
+  height: 90vh;
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  /* Center horizontally */
+  align-items: flex-start;
+  /* Align columns to the top */
+}
+
+.column {
+  height: 100%;
+  width: 20em;
+  padding: 0.5em;
+  margin: 1em;
+  float: left;
+  border: 1px solid #333333;
+  overflow-y: hidden;
+  border-radius: 5px;
+}
+
+.column-content {
+  height: calc(100% - 2.5em);
+  overflow-y: scroll;
+}
+
+.column-title {
+  margin-bottom: 1em;
+  padding: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+
+}
+
+.card {
+  width: 90%;
+  margin: 0.4em auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: azure;
+  border: 0.5px solid #333333;
+  border-radius: 5px;
+  height: 5em;
+}
+
+.wrapper {
+  height: 100%;
+  /* width: 100%; */
+  /*Notice we make sure this container doesn't scroll so that the title stays on top and the dndzone inside is scrollable*/
+  overflow-y: hidden;
+}
