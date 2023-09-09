@@ -1,7 +1,7 @@
+export type Items = Array<{ id: number; name: string; }>;
+
 export type ColumnData = {
   id: string;
   name: string;
-  items: object[];
+  items: Items;
 };
-
-export type Items = Array<{ id: string; name: string; }>;

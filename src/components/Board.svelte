@@ -14,7 +14,7 @@
 </script>
 
 <section class="board" >
-    {#each columns as {id, name,items}, idx (id)}
+    {#each columns as {id, name, items}, idx (id)}
   		<div class="column"animate:flip="{{duration: flipDurationMs}}" >
             <Column name={name} items={items} onDrop={(newItems) => handleItemFinalize(idx, newItems)} />
         </div>

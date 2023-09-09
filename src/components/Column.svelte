@@ -35,7 +35,7 @@
 		on:finalize={handleDndFinalizeCards}
 	>
 
-		{#each items as item (item.id)}
+		{#each items as item (item)}
 			<div class="card" animate:flip={{ duration: flipDurationMs }}>
 				{item.name}
 			</div>
