@@ -2,7 +2,7 @@ export type Item = { id: number; name: string; };
 export type Items = Array<Item>;
 
 export type ColumnData = {
-  _id: string;
+  oid: string;
   name: string;
   items: Items;
 };

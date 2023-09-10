@@ -4,9 +4,10 @@ import { getCardsFromDatabase } from "$lib/db";
 
 export async function load() {
     let columnsData: ColumnData[] = await getCardsFromDatabase();
+    // console.log(columnsData)
     // let columnsData: ColumnData[] = [
     //     {
-    //         _id: "c1",
+    //         oid: "c1",
     //         name: "TODO",
     //         items: [
     //             { id: 1, name: "item41" },
@@ -14,7 +15,7 @@ export async function load() {
     //         ],
     //     },
     //     {
-    //         _id: "c2",
+    //         oid: "c2",
     //         name: "DOING",
     //         items: [
     //             { id: 10, name: "item50" },
@@ -22,7 +23,7 @@ export async function load() {
     //         ],
     //     },
     //     {
-    //         _id: "c3",
+    //         oid: "c3",
     //         name: "DONE",
     //         items: [{ id: 13, name: "item52" }],
     //     },
