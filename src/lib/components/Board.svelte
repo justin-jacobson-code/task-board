@@ -1,7 +1,7 @@
 <script lang="ts">
     import { flip } from "svelte/animate";
     import Column from "../components/Column.svelte";
-    import type { ColumnData } from "../types/types";
+    import type { ColumnData } from "$lib/types";
     const flipDurationMs = 300;
 
     export let columns: ColumnData[];

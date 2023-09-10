@@ -1,4 +1,4 @@
-import type { ColumnData } from "../types/types";
+import type { ColumnData } from "$lib/types";
 import { MongoClient, Db, Collection } from 'mongodb';
 
 const uri: string = process.env.MONGODB_URI ?? '';
@@ -32,6 +32,5 @@ export async function getCardsFromDatabase(): Promise<ColumnData[]> {
         };
     });
 
-    console.log(serializedDocuments)
     return serializedDocuments;
 }

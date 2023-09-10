@@ -1,4 +1,4 @@
-export type Item = { _id: number; name: string; };
+export type Item = { id: number; name: string; };
 export type Items = Array<Item>;
 
 export type ColumnData = {
