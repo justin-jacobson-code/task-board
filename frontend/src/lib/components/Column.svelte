@@ -45,5 +45,5 @@
 </div>
 
 <style>
-	@import "../../styles.css";
+	@import "$lib/styles.css";
 </style>
