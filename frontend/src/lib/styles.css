@@ -5,13 +5,11 @@
   margin-bottom: 40px;
   display: flex;
   justify-content: center;
-  /* Center horizontally */
   align-items: flex-start;
-  /* Align columns to the top */
 }
 
 .column {
-  height: 100%;
+  height: 90%;
   width: 20em;
   padding: 0.5em;
   margin: 1em;
@@ -22,18 +20,17 @@
 }
 
 .column-content {
-  height: calc(100% - 2.5em);
+  height: calc(100% - 2em);
   overflow-y: scroll;
 }
 
 .column-title {
-  margin-bottom: 1em;
+  margin-bottom: .5em;
   padding: 0.5em;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.5em;
-
 }
 
 .card {
@@ -97,4 +94,12 @@
   border-radius: 5px;
   position: relative;
   border: 1px solid #ccc;
+}
+
+h1 {
+  text-align: center;
+  /* margin-bottom: 1em; */
+  margin: auto;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 3em;
 }

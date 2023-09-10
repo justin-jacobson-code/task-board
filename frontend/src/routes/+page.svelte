@@ -5,4 +5,9 @@
 </script>
 
 <!-- Render the Board component -->
+<h1>Task Board</h1>
 <Board columns={data.columnsData} />
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+</style>
