@@ -11,7 +11,7 @@
             // Trigger an event to add the new card to the column
             const newItem = { id: Date.now(), name: newCardName };
             items = [newItem, ...items];
-            createCardInDatabase(newCardName, newItem, columnName);
+            createCardInDatabase(columnName, newCardName, newItem);
 
             // Clear the input field
             newCardName = "";

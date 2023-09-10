@@ -28,12 +28,12 @@ export async function updateColumnInDatabase(columnName: string, newItemsOrder: 
     }
 }
 
-export async function createCardInDatabase(cardName: string, newItem: Item, columnName: string) {
+export async function createCardInDatabase(columnName: string, cardName: string, newItem: Item) {
     try {
         const response = await axios.put("http://0.0.0.0:80/items/insert", {
+            columnName,
             cardName,
             newItem,
-            columnName
         });
 
         if (response.status === 200) {

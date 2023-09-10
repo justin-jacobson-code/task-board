@@ -1,84 +1,88 @@
+import os
+import logging
 from fastapi import FastAPI, HTTPException
 from pymongo import MongoClient
 from pydantic import BaseModel
-from typing import List
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
-import os
-import logging
 
 load_dotenv()
 
-# Create a FastAPI instance
 app = FastAPI()
 
-# Define CORS settings
 origins = [
-    "http://localhost:5173",  # Add the URL of your SvelteKit app here
+    "http://localhost:5173",
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # You can specify specific HTTP methods if needed
-    allow_headers=["*"],  # You can specify specific HTTP headers if needed
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# MongoDB connection settings
-MONGO_URI = os.environ['MONGODB_URI']  # Replace with your MongoDB URI
-DB_NAME = "chores"  # Replace with your database name
-COLLECTION_NAME = "cards"  # Replace with your collection name
+MONGO_URI = os.environ['MONGODB_URI']
+DB_NAME = "chores"
+COLLECTION_NAME = "cards"
 
 logging.basicConfig(level=logging.DEBUG)
-# logging.debug(MONGO_URI)
 
-# Connect to MongoDB
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 collection = db[COLLECTION_NAME]
 
-# Pydantic model for the item
+
 class Items(BaseModel):
     oid: str
     name: str
-    items: List[dict]
+    items: list[dict]
+
 
 class InsertColumnRequest(BaseModel):
+    columnName: str
     cardName: str
     newItem: dict
-    columnName: str
+
 
 class UpdateColumnRequest(BaseModel):
     columnName: str
-    newItemsOrder: List[dict]
+    newItemsOrder: list[dict]
 
-# Get all items
-@app.get("/items", response_model=List[Items])
+
+@app.get("/items", response_model=list[Items])
 async def read_items():
-    items = list(collection.find())
-    serialized_items = []
-    for item in items:
-        serialized_item = {
-            "oid": str(item["_id"]),  # Convert ObjectId to string
-            "name": item["name"],
-            "items": item["items"]
-        }
-        serialized_items.append(serialized_item)
+    """Get all items from the database and return serialized list"""
+    try:
+        items = list(collection.find())
+        serialized_items = []
+        for item in items:
+            serialized_item = {
+                "oid": str(item["_id"]),  # Convert ObjectId to string
+                "name": item["name"],
+                "items": item["items"]
+            }
+            serialized_items.append(serialized_item)
 
-    logging.debug(f'Items: {serialized_items}')
-    return serialized_items
+        logging.debug(f'Items: {serialized_items}')
+        return serialized_items
+
+    except Exception as e:
+        logging.error(e)
+        return HTTPException(status_code=500, detail="Internal server error")
+
 
 @app.put("/items/insert")
 async def create_item(request: InsertColumnRequest):
+    """Create a new item in column"""
     try:
         # Get the data from the request
         card_name = request.cardName
         new_item = request.newItem
         column_name = request.columnName
 
-        logging.info(f'Card name: {card_name}')
-        logging.info(f'New item: {new_item}')
+        logging.debug(f'Card name: {card_name}')
+        logging.debug(f'New item: {new_item}')
 
         # Ensure that column_name and new_item are not None before proceeding
         if not card_name or not new_item:
@@ -108,15 +112,16 @@ async def create_item(request: InsertColumnRequest):
         return HTTPException(status_code=500, detail="Internal server error")
 
 
-# Update an item by ID
 @app.put("/items/update")
 async def update_items(request: UpdateColumnRequest):
+    """Update an item in column"""
     try:
         # Get the data from the request
         column_name = request.columnName
         new_items_order = request.newItemsOrder
 
-        collection.update_one({"name": column_name}, {"$set": {"items": new_items_order}})
+        collection.update_one({"name": column_name}, {
+                              "$set": {"items": new_items_order}})
 
         logging.debug(f'{column_name} updated successfully')
         return {"message": "Column updated successfully"}
@@ -124,7 +129,7 @@ async def update_items(request: UpdateColumnRequest):
         logging.error(e)
         return HTTPException(status_code=500, detail="Internal server error")
 
-# Delete an item by ID
+
 @app.delete("/items", response_model=Items)
 async def delete_item(item_id: str):
     item = collection.find_one({"_id": item_id})
