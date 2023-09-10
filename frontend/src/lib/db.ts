@@ -47,11 +47,14 @@ export async function createCardInDatabase(columnName: string, cardName: string,
     }
 }
 
-export async function deleteCardInDatabase(columnName: string, newItemsOrder: Items) {
+export async function deleteCardInDatabase(columnName: string, itemId: number, itemName: string) {
     try {
         const response = await axios.delete("http://0.0.0.0:80/items", {
-            columnName,
-            newItemsOrder,
+            data: {
+                columnName,
+                itemId,
+                itemName
+            },
         });
 
         if (response.status === 200) {

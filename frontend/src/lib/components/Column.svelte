@@ -17,7 +17,7 @@
 	function deleteItem(itemToDelete: Item) {
 		// filter out itemToDelete from items
 		items = items.filter((item: Item) => item.id !== itemToDelete.id);
-		// deleteCardInDatabase
+		deleteCardInDatabase(name, itemToDelete.id, itemToDelete.name)
 	}
 
 </script>
