@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"time"
 
@@ -50,13 +51,15 @@ func init() {
 		return
 	}
 
-	mongoURI := os.Getenv("MONGODB_URI")
+	driver := os.Getenv("MONGODB_DRIVER")
+	username := os.Getenv("MONGODB_USERNAME")
+	password := os.Getenv("MONGODB_PASSWORD")
+	cluster := os.Getenv("MONGODB_CLUSTER")
 
-	if mongoURI == "" {
-		log.Fatal("MONGODB_URI environment variable is not defined.")
-	}
+	uri := driver + username + ":" +
+		url.QueryEscape(password) + "@" + cluster
 
-	clientOptions := options.Client().ApplyURI(mongoURI)
+	clientOptions := options.Client().ApplyURI(uri)
 	client, err := mongo.NewClient(clientOptions)
 	if err != nil {
 		log.Fatal(err)
@@ -68,6 +71,11 @@ func init() {
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		log.Fatal("Failed to connect to MongoDB: ", err)
 	}
 
 	collection = client.Database("chores").Collection("cards")
