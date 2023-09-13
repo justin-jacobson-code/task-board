@@ -23,9 +23,9 @@ var (
 )
 
 type Item struct {
-	ID    primitive.ObjectID       `json:"oid" bson:"_id"`
-	Name  string                   `json:"name" bson:"name"`
-	Items []map[string]interface{} `json:"items" bson:"items"`
+	ID      primitive.ObjectID       `json:"oid" bson:"_id"`
+	UserId  string                   `json:"userId" bson:"userId"`
+	Columns []map[string]interface{} `json:"columns" bson:"columns"`
 }
 
 type InsertColumnRequest struct {
@@ -76,7 +76,7 @@ func init() {
 	}
 	log.Println("Connected to MongoDB!")
 
-	collection = client.Database("chores").Collection("cards")
+	collection = client.Database("chores").Collection("users")
 }
 
 func main() {

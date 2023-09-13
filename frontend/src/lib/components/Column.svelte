@@ -38,7 +38,7 @@
 		on:consider={handleDndCard}
 		on:finalize={handleDndCard}
 	>
-		{#each items as item (item.id)}
+		{#each items as item (item)}
 			<Card bind:item={item} deleteItem={(item) => deleteItem(item)} />
 		{/each}
 	</div>

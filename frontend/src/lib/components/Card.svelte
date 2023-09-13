@@ -22,5 +22,5 @@
     </span>
 
     <!-- Card content -->
-    {item.name}
+    {item.taskName}
 </div>

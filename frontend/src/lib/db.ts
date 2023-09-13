@@ -4,7 +4,9 @@ import axios from "axios";
 export async function getCardsFromDatabase(): Promise<ColumnData[]> {
     // call the API
     const res = await axios.get('http://0.0.0.0:80/items');
-    const data = await res.data;
+    let data = await res.data;
+
+    data = data[0].columns;
     console.log("Data: ", data);
 
     return data;
