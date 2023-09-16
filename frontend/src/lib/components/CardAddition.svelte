@@ -4,19 +4,19 @@
 
     export let items: Items;
     export let columnName: string;
+    export let objectId: string;
     let newCardName = "";
 
     function addCard() {
         if (newCardName.trim() !== "") {
-            // Trigger an event to add the new card to the column
-            const newItem = { id: Date.now(), name: newCardName };
+            const newItem = { id: Date.now(), taskName: newCardName };
             items = [newItem, ...items];
-            createCardInDatabase(columnName, newCardName, newItem);
+            createCardInDatabase(objectId, columnName, newItem);
 
-            // Clear the input field
             newCardName = "";
         }
     }
+
 </script>
 
 <div class="card-addition">

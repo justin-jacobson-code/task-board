@@ -6,18 +6,19 @@
 	import { deleteCardInDatabase, updateColumnInDatabase } from "$lib/db";
 
 	const flipDurationMs = 220;
+	export let objectId: string;
 	export let name: string;
 	export let items: Items;
 
 	function handleDndCard(e: CustomEvent<{ items: Items }>) {
 		items = e.detail.items;
-		updateColumnInDatabase(name, items);
+		updateColumnInDatabase(objectId, name, items);
 	}
 
 	function deleteItem(itemToDelete: Item) {
 		// filter out itemToDelete from items
 		items = items.filter((item: Item) => item.id !== itemToDelete.id);
-		deleteCardInDatabase(name, itemToDelete.id, itemToDelete.name)
+		deleteCardInDatabase(objectId, name, itemToDelete.id)
 	}
 
 </script>
@@ -26,7 +27,7 @@
 	<div class="column-title">
 		{name}
 	</div>
-		<CardAddition bind:items columnName={name} />
+		<CardAddition bind:items objectId={objectId} columnName={name} />
 	<div
 		class="column-content"
 		use:dndzone={{

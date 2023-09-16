@@ -1,17 +1,19 @@
 <script lang="ts">
     import { flip } from "svelte/animate";
     import Column from "../components/Column.svelte";
-    import type { ColumnData } from "$lib/types";
+    import type { ColumnData, UserData } from "$lib/types";
     const flipDurationMs = 300;
 
-    export let columns: ColumnData[];
+    export let userData: UserData[];
+    const columns: ColumnData[] = userData[0].columns;
+    const objectId = userData[0].oid;
 
 </script>
 
 <section class="board" >
     {#each columns as {id, name, items}, idx (id)}
   		<div class="column" animate:flip="{{duration: flipDurationMs}}" >
-            <Column name={name} items={items} />
+            <Column objectId={objectId} name={name} items={items} />
         </div>
     {/each}
 </section>

@@ -29,20 +29,21 @@ type Item struct {
 }
 
 type InsertColumnRequest struct {
+	ObjectID   primitive.ObjectID     `json:"objectId"`
 	ColumnName string                 `json:"columnName"`
-	CardName   string                 `json:"cardName"`
 	NewItem    map[string]interface{} `json:"newItem"`
 }
 
 type UpdateColumnRequest struct {
+	ObjectID      string                   `json:"objectId"`
 	ColumnName    string                   `json:"columnName"`
 	NewItemsOrder []map[string]interface{} `json:"newItemsOrder"`
 }
 
 type DeleteItemRequest struct {
-	ColumnName string `json:"columnName"`
-	ItemId     int    `json:"itemId"`
-	ItemName   string `json:"itemName"`
+	ObjectID   primitive.ObjectID `json:"objectId"`
+	ColumnName string             `json:"columnName"`
+	ItemId     int                `json:"itemId"`
 }
 
 func init() {
@@ -134,15 +135,33 @@ func createItem(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request data"})
 	}
 
-	if request.CardName == "" || request.NewItem == nil || request.ColumnName == "" {
+	if request.NewItem == nil || request.ColumnName == "" {
 		return c.Status(http.StatusUnprocessableEntity).JSON(fiber.Map{"error": "Invalid request data"})
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	filter := bson.M{"name": request.ColumnName}
-	update := bson.M{"$push": bson.M{"items": bson.M{"$each": []interface{}{request.NewItem}, "$position": 0}}}
+	oid, oidErr := primitive.ObjectIDFromHex(request.ObjectID.Hex())
+	if oidErr != nil {
+		fmt.Println("Error:", oidErr)
+	} else {
+		fmt.Println(oid.Hex())
+	}
+
+	filter := bson.M{
+		"_id":          oid,
+		"columns.name": request.ColumnName,
+	}
+
+	update := bson.M{
+		"$push": bson.M{
+			"columns.$.items": bson.M{
+				"$each":     []interface{}{request.NewItem},
+				"$position": 0,
+			},
+		},
+	}
 
 	log.Println(filter)
 	log.Println(update)
@@ -171,8 +190,23 @@ func updateItems(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	filter := bson.M{"name": request.ColumnName}
-	update := bson.M{"$set": bson.M{"items": request.NewItemsOrder}}
+	oid, oidErr := primitive.ObjectIDFromHex(request.ObjectID)
+	if oidErr != nil {
+		fmt.Println("Error:", oidErr)
+	} else {
+		fmt.Println(oid.Hex())
+	}
+
+	filter := bson.M{
+		"_id":          oid,
+		"columns.name": request.ColumnName,
+	}
+
+	update := bson.M{
+		"$set": bson.M{
+			"columns.$.items": request.NewItemsOrder,
+		},
+	}
 
 	log.Println(filter)
 	log.Println(update)
@@ -195,7 +229,7 @@ func deleteItem(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request data"})
 	}
 
-	log.Println("Item to be deleted:", request.ItemName)
+	log.Println("Item to be deleted:", request.ItemId)
 
 	if request.ColumnName == "" || request.ItemId == 0 {
 		return c.Status(http.StatusUnprocessableEntity).JSON(fiber.Map{"error": "Invalid request data"})
@@ -204,12 +238,23 @@ func deleteItem(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	filter := bson.M{
-		"name":       request.ColumnName,
-		"items.name": request.ItemName,
+	oid, oidErr := primitive.ObjectIDFromHex(request.ObjectID.Hex())
+	if oidErr != nil {
+		fmt.Println("Error:", oidErr)
+	} else {
+		fmt.Println(oid.Hex())
 	}
 
-	update := bson.M{"$pull": bson.M{"items": bson.M{"id": request.ItemId}}}
+	filter := bson.M{
+		"_id":          oid,
+		"columns.name": request.ColumnName,
+	}
+
+	update := bson.M{
+		"$pull": bson.M{
+			"columns.$.items": bson.M{"id": request.ItemId},
+		},
+	}
 
 	log.Println(filter)
 

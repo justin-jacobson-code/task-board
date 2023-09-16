@@ -1,20 +1,20 @@
-import type { ColumnData, Items } from "$lib/types";
+import type { UserData, Items } from "$lib/types";
 import axios from "axios";
 
-export async function getCardsFromDatabase(): Promise<ColumnData[]> {
+export async function getCardsFromDatabase(): Promise<UserData[]> {
     // call the API
     const res = await axios.get('http://0.0.0.0:80/items');
     let data = await res.data;
 
-    data = data[0].columns;
     console.log("Data: ", data);
 
     return data;
 }
 
-export async function updateColumnInDatabase(columnName: string, newItemsOrder: Items) {
+export async function updateColumnInDatabase(objectId: string, columnName: string, newItemsOrder: Items) {
     try {
         const response = await axios.put("http://0.0.0.0:80/items/update", {
+            objectId,
             columnName,
             newItemsOrder,
         });
@@ -30,11 +30,11 @@ export async function updateColumnInDatabase(columnName: string, newItemsOrder: 
     }
 }
 
-export async function createCardInDatabase(columnName: string, cardName: string, newItem: Item) {
+export async function createCardInDatabase(objectId: string, columnName: string, newItem: Item) {
     try {
         const response = await axios.put("http://0.0.0.0:80/items/insert", {
+            objectId,
             columnName,
-            cardName,
             newItem,
         });
 
@@ -49,13 +49,13 @@ export async function createCardInDatabase(columnName: string, cardName: string,
     }
 }
 
-export async function deleteCardInDatabase(columnName: string, itemId: number, itemName: string) {
+export async function deleteCardInDatabase(objectId: string, columnName: string, itemId: number) {
     try {
         const response = await axios.delete("http://0.0.0.0:80/items", {
             data: {
+                objectId,
                 columnName,
                 itemId,
-                itemName
             },
         });
 
