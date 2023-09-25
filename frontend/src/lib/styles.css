@@ -21,7 +21,7 @@
 
 .column-content {
   height: calc(100% - 2em);
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .column-title {

@@ -25,7 +25,7 @@
 
 <div class="wrapper">
 	<div class="column-title">
-		{name}
+		{name.toUpperCase()}
 	</div>
 		<CardAddition bind:items objectId={objectId} columnName={name} />
 	<div

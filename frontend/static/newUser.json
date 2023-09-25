@@ -1,0 +1,19 @@
+{
+  "columns": [
+    {
+      "id": 1,
+      "name": "todo",
+      "items": []
+    },
+    {
+      "id": 2,
+      "name": "doing",
+      "items": []
+    },
+    {
+      "id": 3,
+      "name": "done",
+      "items": []
+    }
+  ]
+}
